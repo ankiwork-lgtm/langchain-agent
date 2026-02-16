@@ -25,12 +25,12 @@ doc_splits = text_splitter.split_documents(docs_list)
 vectorstore = Chroma.from_documents(
     documents=doc_splits,
     collection_name="rag-chroma",
-    embedding=GoogleGenerativeAIEmbeddings(),
+    embedding=GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", task_type="retrieval_document"),
     persist_directory="./chroma_db",
 )
 
 retriever = Chroma(
     collection_name="rag-chroma",
-    embedding_function=GoogleGenerativeAIEmbeddings(),
+    embedding_function=GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", task_type="retrieval_query"),
     persist_directory="./chroma_db",
 ).as_retriever()
